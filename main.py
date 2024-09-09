@@ -13,7 +13,7 @@ def read_tasks(file_name):
 def write_tasks(file_name, tasks):
     with open(file_name, 'w') as f:
         for task in tasks:
-            f.write(f"{task[0]},{task[1]}\n")
+            f.write(f"{task[0]};{task[1]}\n")
 
 def add_task(file_name, description):
     tasks = read_tasks(file_name)
