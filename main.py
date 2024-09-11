@@ -121,7 +121,8 @@ def rm(filename, id):
                 file.write(line)
             else :
                 notfound = False
-    print("ERROR : id not found")
+    if notfound:
+        print("ERROR : id not found")
 
 def show(filename):
     """
@@ -135,20 +136,26 @@ def show(filename):
         lines = file.readlines()
     max_len_id = 0
     max_len_des = 0
+    max_len_prio=0
     for line in lines:
         infos = get_infos(line)
         lines_infos.append(infos)
         max_len_id = max(max_len_id, len(infos[0]))
         max_len_des = max(max_len_des, len(infos[1]))
+        max_len_prio=max(max_len_prio,len(infos[2]))
     id_case_size = max_len_id + 2
     des_case_size = max_len_des + 2
-    separator = "+" + "".join(['-' for i in range(id_case_size)]) + "+" + "".join(['-' for i in range(des_case_size)]) + "+"
+    prio_case_size=max_len_prio+2
+    separator = "+" + "".join(['-' for i in range(id_case_size)]) + "+" + "".join(['-' for i in range(des_case_size)]) + "+"+"".join(['-' for i in range(prio_case_size) ])+"+"
     print(separator)
+
     for info in lines_infos:
         print("|" , end="")
         print(" " + info[0] + "".join([' ' for i in range(max_len_id - len(info[0]) + 1)]), end="")
         print("|", end="")
         print(" " + info[1] + "".join([' ' for i in range(max_len_des - len(info[1]) + 1)]), end="")
+        print("|",end="")
+        print( " " +info[2]+"".join([' ' for i in range(max_len_prio-len(info[2])+1)]),end="")
         print("|")
         print(separator)
 

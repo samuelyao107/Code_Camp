@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 0;hsh
 1;nkkkdndddd c;1
 2;ndnd c;1
 3;ndndddd c;1
+=======
+0;bonjour;1
+1;bonsoir;3
+2;hello;2
+>>>>>>> 32995fc0f404ce6edeeb29c1a6217ca936485609
