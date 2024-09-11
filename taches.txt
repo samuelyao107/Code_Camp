@@ -1,3 +1,0 @@
-1 ; tache 1
-4 ; tache 2
-3 ; tache 3
