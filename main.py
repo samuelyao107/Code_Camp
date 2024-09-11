@@ -89,6 +89,7 @@ def modify(filename, id, description):
     :param str description: la nouvelle description
     """
     lines = []
+    notfound = True
     with open(filename, 'r') as file:
         lines = file.readlines()
 
@@ -98,6 +99,9 @@ def modify(filename, id, description):
                 file.write(line)
             else:
                 file.write(str(id) + ";" + description + "\n")
+                notfound = False
+    if notfound :
+        print("ERROR : id not found")
 
 def rm(filename, id):
     """
@@ -107,6 +111,7 @@ def rm(filename, id):
     :param str id: l'id de la tâche a supprimer
     """
     lines = []
+    notfound = True
     with open(filename, 'r') as file:
         lines = file.readlines()
 
@@ -114,6 +119,9 @@ def rm(filename, id):
         for line in lines:
             if get_id(line) != id :
                 file.write(line)
+            else :
+                notfound = False
+    print("ERROR : id not found")
 
 def show(filename):
     """
