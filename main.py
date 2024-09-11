@@ -56,7 +56,7 @@ def write_tasks(file_name, tasks):
     if args.type == "add":
         add(args.filename, args.description, args.priorite)
     if args.type == "modify":  
-        modify(args.filename, int(args.id), args.description,int(args.priority))
+        modify(args.filename, int(args.id), args.description,args.priority)
     if args.type == "rm":  
         rm(args.filename, int(args.id))
     if args.type == "show":  
@@ -195,9 +195,5 @@ def parse_performe():
     args = parser.parse_args()
 
     perform_action(args)
-
-    print(args)
-
-
 
 parse_performe()
