@@ -5,7 +5,7 @@ def get_id(line):
     """
     Récupère l'id inscrite sur une ligne de tâche
 
-    :param str line: La ligne dans laquelle il faut récupéré l'id
+    :param str line: La ligne dans laquelle il faut récupérer l'id
 
     :return: l'id récupéré
     :rtype: int
@@ -23,7 +23,7 @@ def get_infos(line):
     """
     Récupère les infos inscrites dans une ligne de tâche (séparées par ;)
 
-    :param str line: La ligne dans laquelle il faut récupéré les infos
+    :param str line: La ligne dans laquelle il faut récupérer les infos
 
     :return: la liste des infos récup
     :rtype: list of string
@@ -42,9 +42,9 @@ def get_infos(line):
 
 def perform_action(args):
     """
-    Exécute l'action demander par la ligne de commande, laquelle est stockée dans args
+    Exécute l'action demandée par la ligne de commande, laquelle est stockée dans args
 
-    :param str line: Les arguements de la ligne de commande
+    :param str line: Les arguments de la ligne de commande
     """
     if args.type == "add":
         add(args.filename, args.description)
@@ -111,7 +111,7 @@ def show(filename):
     """
     Modifie les tâches du fichier _filename_
 
-    :param str filename: le nom du fichier a affficher
+    :param str filename: le nom du fichier a afficher
     """
     lines = []
     lines_infos=[]
