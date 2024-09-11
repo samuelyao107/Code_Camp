@@ -43,15 +43,6 @@ def get_infos(line):
 def perform_action(args):
     """
     Exécute l'action demandée par la ligne de commande, laquelle est stockée dans args
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-def write_tasks(file_name, tasks):
-    with open(file_name, 'w') as f:
-        for task in tasks:
-            f.write(f"{task[0]};{task[1]}\n")
-=======
-    :param str line: Les arguements de la ligne de commande
     """
     if args.type == "add":
         add(args.filename, args.description, args.priorite)
