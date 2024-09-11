@@ -52,9 +52,6 @@ def write_tasks(file_name, tasks):
             f.write(f"{task[0]};{task[1]}\n")
 =======
     :param str line: Les arguements de la ligne de commande
-=======
-    :param str line: Les arguments de la ligne de commande
->>>>>>> 6b4e871cfad97f17e9402e9dfa364bb8f3672157
     """
     if args.type == "add":
         add(args.filename, args.description, args.priorite)
