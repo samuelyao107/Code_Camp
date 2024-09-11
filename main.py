@@ -56,7 +56,7 @@ def write_tasks(file_name, tasks):
     if args.type == "add":
         add(args.filename, args.description, args.priorite)
     if args.type == "modify":  
-        modify(args.filename, int(args.id), args.description)
+        modify(args.filename, int(args.id), args.description,int( args.priority))
     if args.type == "rm":  
         rm(args.filename, int(args.id))
     if args.type == "show":  
@@ -80,7 +80,7 @@ def add(filename, description, priorite):
         file.write(str(id_max+1) + ";" + description + ";" + priorite + "\n")
 
 
-def modify(filename, id, description):
+def modify(filename, id, description, priority):
     """
     Modifie la tâche d'id _id_ avec la nouvelle description _description_ dans le fichier _filename_
 
@@ -98,7 +98,7 @@ def modify(filename, id, description):
             if get_id(line) != id :
                 file.write(line)
             else:
-                file.write(str(id) + ";" + description + "\n")
+                file.write(str(id) + ";" + description + ";" + str(priority) +"\n")
                 notfound = False
     if notfound :
         print("ERROR : id not found")
@@ -169,6 +169,7 @@ def parse_performe():
     parser_modify = subparsers.add_parser("modify", help="Modifier une tâche")
     parser_modify.add_argument("id", help="L'id de la tâche a modifier")
     parser_modify.add_argument("description", help="La description de la tâche a modifier")
+    parser_modify.add_argument("priority", help="La priorité de la tâche a modifier")
 
     #subparser for the rm method
     parser_rm = subparsers.add_parser("rm", help="Supprimer une tâche")
