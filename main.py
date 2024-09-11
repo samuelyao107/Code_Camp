@@ -56,7 +56,7 @@ def write_tasks(file_name, tasks):
     if args.type == "add":
         add(args.filename, args.description, args.priorite)
     if args.type == "modify":  
-        modify(args.filename, int(args.id), args.description,int( args.priority))
+        modify(args.filename, int(args.id), args.description,int(args.priority))
     if args.type == "rm":  
         rm(args.filename, int(args.id))
     if args.type == "show":  
@@ -98,7 +98,14 @@ def modify(filename, id, description, priority):
             if get_id(line) != id :
                 file.write(line)
             else:
-                file.write(str(id) + ";" + description + ";" + str(priority) +"\n")
+                infos = get_infos(line)
+                des = infos[1]
+                prio = infos[2]
+                if description != None:
+                    des = description
+                if priority != None:
+                    prio = priority
+                file.write(str(id) + ";" + des + ";" + str(prio) +"\n")
                 notfound = False
     if notfound :
         print("ERROR : id not found")
@@ -170,13 +177,13 @@ def parse_performe():
     #subparser for the modify method
     parser_add = subparsers.add_parser("add", help="Ajouter une tâche")
     parser_add.add_argument("description", help="La description de la nouvelle tâche")
-    parser_add.add_argument("priorite", help="La priorite de la nouvelle tâche")
+    parser_add.add_argument("priority", help="La priorite de la nouvelle tâche")
 
     #subparser for the modify method
     parser_modify = subparsers.add_parser("modify", help="Modifier une tâche")
     parser_modify.add_argument("id", help="L'id de la tâche a modifier")
-    parser_modify.add_argument("description", help="La description de la tâche a modifier")
-    parser_modify.add_argument("priority", help="La priorité de la tâche a modifier")
+    parser_modify.add_argument("--d", dest="description", help="La description de la tâche a modifier")
+    parser_modify.add_argument("--p", dest="priority", help="La priorité de la tâche a modifier")
 
     #subparser for the rm method
     parser_rm = subparsers.add_parser("rm", help="Supprimer une tâche")
@@ -188,6 +195,8 @@ def parse_performe():
     args = parser.parse_args()
 
     perform_action(args)
+
+    print(args)
 
 
 

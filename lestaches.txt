@@ -1,3 +1,5 @@
-1;salut
-2;Ma deuxieme t�che
-3;tache1
+Niveau1, numero3:
+- rajouter une information en plus pour une tache
+- modifier la commande add
+- modifier la commande modify
+- mettre a jour la commande show
