@@ -5,7 +5,7 @@ def get_id(line):
     """
     Récupère l'id inscrite sur une ligne de tâche
 
-    :param str line: La ligne dans laquelle il faut récupéré l'id
+    :param str line: La ligne dans laquelle il faut récupérer l'id
 
     :return: l'id récupéré
     :rtype: int
@@ -14,7 +14,7 @@ def get_id(line):
         return None
     id_str = ""
     i = 0
-    while line[i] != ';' :
+    while line[i] != ';':
         id_str += line[i]
         i += 1
     return int(id_str)
@@ -23,7 +23,7 @@ def get_infos(line):
     """
     Récupère les infos inscrites dans une ligne de tâche (séparées par ;)
 
-    :param str line: La ligne dans laquelle il faut récupéré les infos
+    :param str line: La ligne dans laquelle il faut récupérer les infos
 
     :return: la liste des infos récup
     :rtype: list of string
@@ -42,12 +42,19 @@ def get_infos(line):
 
 def perform_action(args):
     """
-    Exécute l'action demander par la ligne de commande, laquelle est stockée dans args
+    Exécute l'action demandée par la ligne de commande, laquelle est stockée dans args
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+def write_tasks(file_name, tasks):
+    with open(file_name, 'w') as f:
+        for task in tasks:
+            f.write(f"{task[0]};{task[1]}\n")
+=======
     :param str line: Les arguements de la ligne de commande
     """
     if args.type == "add":
-        add(args.filename, args.description)
+        add(args.filename, args.description, args.priorite)
     if args.type == "modify":  
         modify(args.filename, int(args.id), args.description)
     if args.type == "rm":  
@@ -55,7 +62,8 @@ def perform_action(args):
     if args.type == "show":  
         show(args.filename)
 
-def add(filename, description):
+
+def add(filename, description, priorite):
     """
     Rajoute une nouvelle tâche de description _description_ dans le fichier _filename_ 
 
@@ -69,7 +77,7 @@ def add(filename, description):
             id_max = get_id(lines[-1])
     
     with open(filename, 'a') as file:
-        file.write(str(id_max+1) + ";" + description + "\n")
+        file.write(str(id_max+1) + ";" + description + ";" + priorite + "\n")
 
 
 def modify(filename, id, description):
@@ -111,7 +119,7 @@ def show(filename):
     """
     Modifie les tâches du fichier _filename_
 
-    :param str filename: le nom du fichier a affficher
+    :param str filename: le nom du fichier a afficher
     """
     lines = []
     lines_infos=[]
@@ -153,6 +161,7 @@ def parse_performe():
     #subparser for the modify method
     parser_add = subparsers.add_parser("add", help="Ajouter une tâche")
     parser_add.add_argument("description", help="La description de la nouvelle tâche")
+    parser_add.add_argument("priorite", help="La priorite de la nouvelle tâche")
 
     #subparser for the modify method
     parser_modify = subparsers.add_parser("modify", help="Modifier une tâche")
