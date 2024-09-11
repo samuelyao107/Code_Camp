@@ -121,7 +121,8 @@ def rm(filename, id):
                 file.write(line)
             else :
                 notfound = False
-    print("ERROR : id not found")
+    if notfound:
+        print("ERROR : id not found")
 
 def show(filename):
     """
