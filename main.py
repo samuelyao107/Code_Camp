@@ -1,85 +1,177 @@
-import argparse
-import os
+import argparse as ap
 
 
-def rm(fichier_name,id):
-    
-    lignes_mofifies=[]
-    
-    with open(fichier_name, 'r') as f:
-        lignes = f.readlines()
-        
-    for ligne in lignes:
-            #index+=1
-            partie_gauche, partie_droite = ligne.split(';', 1)
-            if partie_gauche!=id:
-                 lignes_mofifies.append(ligne)
+def get_id(line):
+    """
+    Récupère l'id inscrite sur une ligne de tâche
 
-    with open(fichier_name,'w') as f:
-         f.writelines(lignes_mofifies)   
-            
-    print("ligne removed?")
+    :param str line: La ligne dans laquelle il faut récupéré l'id
 
-def read_tasks(file_name):
-    if not os.path.exists(file_name):
+    :return: l'id récupéré
+    :rtype: int
+    """
+    if line == "":
+        return None
+    id_str = ""
+    i = 0
+    while line[i] != ';':
+        id_str += line[i]
+        i += 1
+    return int(id_str)
+
+def get_infos(line):
+    """
+    Récupère les infos inscrites dans une ligne de tâche (séparées par ;)
+
+    :param str line: La ligne dans laquelle il faut récupéré les infos
+
+    :return: la liste des infos récup
+    :rtype: list of string
+    """
+    res = []
+    if line == "":
         return []
-    with open(file_name, 'r') as f:
-        lines = f.readlines()
-    tasks = [line.strip().split(",", 1) for line in lines if line.strip()]
-    return [(int(task[0]), task[1]) for task in tasks]
+    str = ""
+    for c in line:
+        if c != ';' and c != '\n':
+            str += c
+        else:
+            res.append(str)
+            str = ""
+    return res
 
+def perform_action(args):
+    """
+    Exécute l'action demander par la ligne de commande, laquelle est stockée dans args
 
+<<<<<<< HEAD
 def write_tasks(file_name, tasks):
     with open(file_name, 'w') as f:
         for task in tasks:
             f.write(f"{task[0]};{task[1]}\n")
+=======
+    :param str line: Les arguements de la ligne de commande
+    """
+    if args.type == "add":
+        add(args.filename, args.description, args.priorite)
+    if args.type == "modify":  
+        modify(args.filename, int(args.id), args.description)
+    if args.type == "rm":  
+        rm(args.filename, int(args.id))
+    if args.type == "show":  
+        show(args.filename)
 
 
-def add_task(file_name, description):
-    tasks = read_tasks(file_name)
-    new_id = max([task[0] for task in tasks], default=0) + 1
-    tasks.append((new_id, description))
-    write_tasks(file_name, tasks)
-    print(f"Added task with ID: {new_id}")
+def add(filename, description, priorite):
+    """
+    Rajoute une nouvelle tâche de description _description_ dans le fichier _filename_ 
 
-def modify_task(file_name, task_id, new_description):
-    # Lire les tâches existantes à partir du fichier
-    tasks = read_tasks(file_name)
+    :param str filename: le nom du fichier a modifier
+    :param str description: la description de la nouvelle tâche
+    """
+    id_max = -1
+    with open(filename, 'r') as file:
+        lines = file.readlines()
+        if len(lines) != 0:
+            id_max = get_id(lines[-1])
     
-    # Chercher la tâche avec l'ID donné
-    for i, task in enumerate(tasks):
-        if task[0] == task_id:  # Comparer l'ID de la tâche
-            tasks[i] = (task_id, new_description)  # Modifier la description
-            write_tasks(file_name, tasks)  # Écrire les tâches mises à jour dans le fichier
-            print(f"Tâche {task_id} modifiée.")
-            return
-    
-    # Si la tâche avec l'ID donné n'a pas été trouvée
-    print(f"Erreur : la tâche avec l'ID {task_id} n'a pas été trouvée.")
+    with open(filename, 'a') as file:
+        file.write(str(id_max+1) + ";" + description + ";" + priorite + "\n")
 
-def main():
-    parser = argparse.ArgumentParser(description='Simple Task Management System')
-    parser.add_argument('filename', help='Name of the file where tasks are stored')
 
-    subparsers = parser.add_subparsers(dest='command', required=True)
+def modify(filename, id, description):
+    """
+    Modifie la tâche d'id _id_ avec la nouvelle description _description_ dans le fichier _filename_
 
-    # Subparser for the "add" command
-    parser_add = subparsers.add_parser('add', help='Add a new task')
-    parser_add.add_argument('description', nargs='+', help='Description of the task')
+    :param str filename: le nom du fichier a modifier
+    :param str id: l'id de la tâche a modifier
+    :param str description: la nouvelle description
+    """
+    lines = []
+    with open(filename, 'r') as file:
+        lines = file.readlines()
 
-    # Subparser for the "add" command
-    modify_parser = subparsers.add_parser("modify", help="Modifier une tâche existante")
-    modify_parser.add_argument("id", type=int, help="ID de la tâche à modifier")
-    modify_parser.add_argument("description", help="Nouvelle description de la tâche", nargs='+')
+    with open(filename, 'w') as file:
+        for line in lines:
+            if get_id(line) != id :
+                file.write(line)
+            else:
+                file.write(str(id) + ";" + description + "\n")
+
+def rm(filename, id):
+    """
+    Enlève la tâche d'id _id_ dans le fichier _filename_
+
+    :param str filename: le nom du fichier a modifier
+    :param str id: l'id de la tâche a supprimer
+    """
+    lines = []
+    with open(filename, 'r') as file:
+        lines = file.readlines()
+
+    with open(filename, 'w') as file:
+        for line in lines:
+            if get_id(line) != id :
+                file.write(line)
+
+def show(filename):
+    """
+    Modifie les tâches du fichier _filename_
+
+    :param str filename: le nom du fichier a affficher
+    """
+    lines = []
+    lines_infos=[]
+    with open(filename, 'r') as file:
+        lines = file.readlines()
+    max_len_id = 0
+    max_len_des = 0
+    for line in lines:
+        infos = get_infos(line)
+        lines_infos.append(infos)
+        max_len_id = max(max_len_id, len(infos[0]))
+        max_len_des = max(max_len_des, len(infos[1]))
+    id_case_size = max_len_id + 2
+    des_case_size = max_len_des + 2
+    separator = "+" + "".join(['-' for i in range(id_case_size)]) + "+" + "".join(['-' for i in range(des_case_size)]) + "+"
+    print(separator)
+    for info in lines_infos:
+        print("|" , end="")
+        print(" " + info[0] + "".join([' ' for i in range(max_len_id - len(info[0]) + 1)]), end="")
+        print("|", end="")
+        print(" " + info[1] + "".join([' ' for i in range(max_len_des - len(info[1]) + 1)]), end="")
+        print("|")
+        print(separator)
+
+def parse_performe():
+    """
+    Lit la ligne de commande et éxécute les opérations nécessaires.
+    """
+    parser = ap.ArgumentParser()
+    parser.add_argument("filename", default="", help="le nom du fichier sur laquelle l'action est réalisée")
+    subparsers = parser.add_subparsers(dest="type", help="le type d'action a effectuer")
+
+    #subparser for the modify method
+    parser_add = subparsers.add_parser("add", help="Ajouter une tâche")
+    parser_add.add_argument("description", help="La description de la nouvelle tâche")
+    parser_add.add_argument("priorite", help="La priorite de la nouvelle tâche")
+
+    #subparser for the modify method
+    parser_modify = subparsers.add_parser("modify", help="Modifier une tâche")
+    parser_modify.add_argument("id", help="L'id de la tâche a modifier")
+    parser_modify.add_argument("description", help="La description de la tâche a modifier")
+
+    #subparser for the rm method
+    parser_rm = subparsers.add_parser("rm", help="Supprimer une tâche")
+    parser_rm.add_argument("id",help="L'id de la tâche a supprimer")
+
+    #subparser for the show method
+    parser_show = subparsers.add_parser("show", help="Afficher les tâches")
 
     args = parser.parse_args()
 
-    if args.command == 'add':
-        description = " ".join(args.description)
-        add_task(args.filename, description)
-    elif args.command == 'modify':
-        modify_task(args.filename, args.id, ' '.join(args.description))
+    perform_action(args)
 
-if __name__ == "__main__":
-    main()
 
+
+parse_performe()
