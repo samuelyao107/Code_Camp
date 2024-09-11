@@ -14,7 +14,7 @@ def get_id(line):
         return None
     id_str = ""
     i = 0
-    while line[i] != ';' :
+    while line[i] != ';':
         id_str += line[i]
         i += 1
     return int(id_str)
@@ -44,18 +44,26 @@ def perform_action(args):
     """
     Exécute l'action demandée par la ligne de commande, laquelle est stockée dans args
 
-    :param str line: Les arguments de la ligne de commande
+<<<<<<< HEAD
+<<<<<<< HEAD
+def write_tasks(file_name, tasks):
+    with open(file_name, 'w') as f:
+        for task in tasks:
+            f.write(f"{task[0]};{task[1]}\n")
+=======
+    :param str line: Les arguements de la ligne de commande
     """
     if args.type == "add":
-        add(args.filename, args.description)
+        add(args.filename, args.description, args.priorite)
     if args.type == "modify":  
-        modify(args.filename, int(args.id), args.description, args.priority)
+        modify(args.filename, int(args.id), args.description)
     if args.type == "rm":  
         rm(args.filename, int(args.id))
     if args.type == "show":  
         show(args.filename)
 
-def add(filename, description):
+
+def add(filename, description, priorite):
     """
     Rajoute une nouvelle tâche de description _description_ dans le fichier _filename_ 
 
@@ -69,10 +77,10 @@ def add(filename, description):
             id_max = get_id(lines[-1])
     
     with open(filename, 'a') as file:
-        file.write(str(id_max+1) + ";" + description + "\n")
+        file.write(str(id_max+1) + ";" + description + ";" + priorite + "\n")
 
 
-def modify(filename, id, description, priority):
+def modify(filename, id, description):
     """
     Modifie la tâche d'id _id_ avec la nouvelle description _description_ dans le fichier _filename_
 
@@ -81,6 +89,7 @@ def modify(filename, id, description, priority):
     :param str description: la nouvelle description
     """
     lines = []
+    notfound = True
     with open(filename, 'r') as file:
         lines = file.readlines()
 
@@ -89,7 +98,10 @@ def modify(filename, id, description, priority):
             if get_id(line) != id :
                 file.write(line)
             else:
-                file.write(str(id) + ";" + description + +";" + priority+ "\n")
+                file.write(str(id) + ";" + description + "\n")
+                notfound = False
+    if notfound :
+        print("ERROR : id not found")
 
 def rm(filename, id):
     """
@@ -99,6 +111,7 @@ def rm(filename, id):
     :param str id: l'id de la tâche a supprimer
     """
     lines = []
+    notfound = True
     with open(filename, 'r') as file:
         lines = file.readlines()
 
@@ -106,6 +119,9 @@ def rm(filename, id):
         for line in lines:
             if get_id(line) != id :
                 file.write(line)
+            else :
+                notfound = False
+    print("ERROR : id not found")
 
 def show(filename):
     """
@@ -147,12 +163,12 @@ def parse_performe():
     #subparser for the modify method
     parser_add = subparsers.add_parser("add", help="Ajouter une tâche")
     parser_add.add_argument("description", help="La description de la nouvelle tâche")
+    parser_add.add_argument("priorite", help="La priorite de la nouvelle tâche")
 
     #subparser for the modify method
     parser_modify = subparsers.add_parser("modify", help="Modifier une tâche")
     parser_modify.add_argument("id", help="L'id de la tâche a modifier")
     parser_modify.add_argument("description", help="La description de la tâche a modifier")
-    parser_modify.add_argument("priority", help="La priorité de la tâches")
 
     #subparser for the rm method
     parser_rm = subparsers.add_parser("rm", help="Supprimer une tâche")
