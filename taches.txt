@@ -1,6 +1,5 @@
-0;Bonsoir;4
-1;Bonsoir;1
-3;Hola;3
-4;Hola;3
-5;Ma cinquieme tâche;6
-6;La tache;5;102;100
+0;jiii;9;9;9
+1;tgjg;3;67;87
+2;tgjg;rrr;67;87
+3;tgjjjjg;5;67;87
+4;tgjjjjg;2;67;87
