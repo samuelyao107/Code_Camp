@@ -68,7 +68,7 @@ def add(filename, description, priorite, est_dur, real_dur):
             id_max = get_id(lines[-1])
     
     with open(filename, 'a') as file:
-        file.write(str(id_max+1) + ";" + description + ";" + priorite +";"+ est_dur +";"+ real_dur +  "\n")
+        file.write(str(id_max+1) + ";" + description + ";" + str(priorite) +";"+ est_dur +";"+ real_dur +  "\n")
 
 
 def modify(filename, id, description, priority, est_dur, real_dur):
@@ -180,7 +180,7 @@ def parse_performe():
     #subparser for the add method
     parser_add = subparsers.add_parser("add", help="Ajouter une tâche")
     parser_add.add_argument("description", help="La description de la nouvelle tâche")
-    parser_add.add_argument("priority", help="La priorite de la nouvelle tâche")
+    parser_add.add_argument("priority", type=int, help="La priorite de la nouvelle tâche")
     parser_add.add_argument("est_dur", help="La duree estimee de la nouvelle tâche")
     parser_add.add_argument("real_dur", help="La duree realisee de la nouvelle tâche")
 
@@ -188,7 +188,7 @@ def parse_performe():
     parser_modify = subparsers.add_parser("modify", help="Modifier une tâche")
     parser_modify.add_argument("id", help="L'id de la tâche a modifier")
     parser_modify.add_argument("--d", dest="description", help="La description de la tâche a modifier")
-    parser_modify.add_argument("--p", dest="priority", help="La priorité de la tâche a modifier")
+    parser_modify.add_argument("--p", type=int, dest="priority", help="La priorité de la tâche a modifier")
     parser_modify.add_argument("--de", dest="est_dur", help="La durée estimée de la tâche a modifier")
     parser_modify.add_argument("--dr", dest="real_dur", help="La durée réalisée de la tâche a modifier")
 
