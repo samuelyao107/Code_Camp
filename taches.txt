@@ -1,4 +1,4 @@
-0;Bonsoir;4;9;Bonjo
-1;Bonsoir;1;8; cdzvz
-3;Bonsoir;-1;7; cdzvz
-5;Hola;8;5; cdzvz
+0;Bonsoir;4
+1;Bonsoir;1
+3;Hola;3
+4;Hola;3
