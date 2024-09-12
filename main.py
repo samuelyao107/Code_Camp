@@ -67,6 +67,8 @@ def add(filename, description, priorite, est_dur, real_dur):
     with open(filename, 'r') as file:
         lines = file.readlines()
         if lines:
+
+            print("test")
             if len(lines) != 0:
                 id_max = get_id(lines[-1])
     
