@@ -184,6 +184,16 @@ def parse_performe():
     parser_add.add_argument("est_dur", help="La duree estimee de la nouvelle tâche")
     parser_add.add_argument("real_dur", help="La duree realisee de la nouvelle tâche")
 
+    #subparser for the add method
+    parser_invoke_meta = subparsers.add_parser("invoke_meta", help="Ajouter une une tache qui copie une meta tâche")
+    parser_invoke_meta.add_argument("taches_filename", help="Le fichier des taches")
+    parser_invoke_meta.add_argument("metataches_filename", help="Le fichier des metas taches")
+    parser_invoke_meta.add_argument("id_meta", help="L'id de la meta tache")
+    parser_invoke_meta.add_argument("--d", dest="description", help="Une description imposée")
+    parser_invoke_meta.add_argument("--p", type=int, dest="priority", help="Une priorité imposée")
+    parser_invoke_meta.add_argument("--de", dest="est_dur", help="Une durée estimée imposée")
+    parser_invoke_meta.add_argument("--dr", dest="real_dur", help="Une durée réalisée imposée")
+
     #subparser for the modify method
     parser_modify = subparsers.add_parser("modify", help="Modifier une tâche")
     parser_modify.add_argument("id", help="L'id de la tâche a modifier")
