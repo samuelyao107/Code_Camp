@@ -1,1 +1,9 @@
-1;Bonjour;1
+Niveau1, numero3:
+- rajouter une information en plus pour une tache
+- modifier la commande add
+- modifier la commande modify
+- mettre a jour la commande show
+
+Niveau 3, nume2:
+- rajouter un fichier metataches.txt, qui stocke les meta taches
+- créer une commande add_meta taches.txt metataches.txt 0 --d "NvDes"
