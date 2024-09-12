@@ -47,7 +47,7 @@ def perform_action(args):
     if args.type == "add":
         add(args.filename, args.description, args.priority, args.est_dur, args.real_dur)
     if args.type == "modify":  
-        modify(args.filename, int(args.id), args.description,args.priority)
+        modify(args.filename, int(args.id), args.description,args.priority, args.est_dur, args.real_dur)
     if args.type == "rm":  
         rm(args.filename, int(args.id))
     if args.type == "show":  
@@ -71,13 +71,16 @@ def add(filename, description, priorite, est_dur, real_dur):
         file.write(str(id_max+1) + ";" + description + ";" + priorite +";"+ est_dur +";"+ real_dur +  "\n")
 
 
-def modify(filename, id, description, priority):
+def modify(filename, id, description, priority, est_dur, real_dur):
     """
     Modifie la tâche d'id _id_ avec la nouvelle description _description_ dans le fichier _filename_
 
     :param str filename: le nom du fichier a modifier
     :param str id: l'id de la tâche a modifier
     :param str description: la nouvelle description
+    :param int priority: la priorité de la tâches
+    :param int est_dur: la durée estimée de la tâche
+    :param int real_dur: la durée réel de la tâche
     """
     lines = []
     notfound = True
@@ -92,11 +95,17 @@ def modify(filename, id, description, priority):
                 infos = get_infos(line)
                 des = infos[1]
                 prio = infos[2]
+                estdur=infos[3]
+                realdur=infos[4]
                 if description != None:
                     des = description
                 if priority != None:
                     prio = priority
-                file.write(str(id) + ";" + des + ";" + str(prio) +"\n")
+                if est_dur != None:
+                    estdur= estdur
+                if real_dur != None:
+                    realdur= real_dur
+                file.write(str(id) + ";" + des + ";" + str(prio) + ";"+ str(estdur) + ";" + str(realdur) "\n")
                 notfound = False
     if notfound :
         print("ERROR : id not found")
