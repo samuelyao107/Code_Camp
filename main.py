@@ -45,7 +45,7 @@ def perform_action(args):
     Exécute l'action demandée par la ligne de commande, laquelle est stockée dans args
     """
     if args.type == "add":
-        add(args.filename, args.description, args.priorite)
+        add(args.filename, args.description, args.priority, args.est_dur, args.real_dur)
     if args.type == "modify":  
         modify(args.filename, int(args.id), args.description,args.priority)
     if args.type == "rm":  
@@ -54,7 +54,7 @@ def perform_action(args):
         show(args.filename)
 
 
-def add(filename, description, priorite):
+def add(filename, description, priorite, est_dur, real_dur):
     """
     Rajoute une nouvelle tâche de description _description_ dans le fichier _filename_ 
 
@@ -68,7 +68,7 @@ def add(filename, description, priorite):
             id_max = get_id(lines[-1])
     
     with open(filename, 'a') as file:
-        file.write(str(id_max+1) + ";" + description + ";" + priorite + "\n")
+        file.write(str(id_max+1) + ";" + description + ";" + priorite +";"+ est_dur +";"+ real_dur +  "\n")
 
 
 def modify(filename, id, description, priority):
@@ -169,8 +169,8 @@ def parse_performe():
     parser_add = subparsers.add_parser("add", help="Ajouter une tâche")
     parser_add.add_argument("description", help="La description de la nouvelle tâche")
     parser_add.add_argument("priority", help="La priorite de la nouvelle tâche")
-    parser_add.add_argument("est_dur", help="La durée estimée de la nouvelle tâche")
-    parser_add.add_argument("real_dur", help="La durée réalisée de la nouvelle tâche")
+    parser_add.add_argument("est_dur", help="La duree estimee de la nouvelle tâche")
+    parser_add.add_argument("real_dur", help="La duree realisee de la nouvelle tâche")
 
     #subparser for the modify method
     parser_modify = subparsers.add_parser("modify", help="Modifier une tâche")
