@@ -52,6 +52,8 @@ def perform_action(args):
         rm(args.filename, int(args.id))
     if args.type == "show":  
         show(args.filename)
+    if args.type == "invoke_meta":
+        add_meta_tache(args.taches_filename, args.metataches_filename, args.id_meta, args.description,args.priority, args.est_dur, args.real_dur)
 
 
 def add(filename, description, priorite, est_dur, real_dur):
@@ -184,7 +186,7 @@ def parse_performe():
     parser_add.add_argument("est_dur", help="La duree estimee de la nouvelle tâche")
     parser_add.add_argument("real_dur", help="La duree realisee de la nouvelle tâche")
 
-    #subparser for the add method
+    #subparser for the invoke meta method
     parser_invoke_meta = subparsers.add_parser("invoke_meta", help="Ajouter une une tache qui copie une meta tâche")
     parser_invoke_meta.add_argument("taches_filename", help="Le fichier des taches")
     parser_invoke_meta.add_argument("metataches_filename", help="Le fichier des metas taches")
