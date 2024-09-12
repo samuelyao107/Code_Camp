@@ -45,7 +45,7 @@ def perform_action(args):
     Exécute l'action demandée par la ligne de commande, laquelle est stockée dans args
     """
     if args.type == "add":
-        add(args.filename, args.description, args.priorite)
+        add(args.filename, args.description, args.priority)
     if args.type == "modify":  
         modify(args.filename, int(args.id), args.description,args.priority)
     if args.type == "rm":  
