@@ -102,10 +102,10 @@ def modify(filename, id, description, priority, est_dur, real_dur):
                 if priority != None:
                     prio = priority
                 if est_dur != None:
-                    estdur= estdur
+                    estdur= est_dur
                 if real_dur != None:
                     realdur= real_dur
-                file.write(str(id) + ";" + des + ";" + str(prio) + ";"+ str(estdur) + ";" + str(realdur) "\n")
+                file.write(str(id) + ";" + des + ";" + str(prio) + ";"+ str(estdur) + ";" + str(realdur) + "\n")
                 notfound = False
     if notfound :
         print("ERROR : id not found")

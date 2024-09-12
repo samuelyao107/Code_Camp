@@ -1,10 +1,1 @@
-0;Bonsoir;4
-1;Bonsoir;1
-3;Hola;3
-<<<<<<< HEAD
-4;hhekskkk;errr2
-=======
-4;Hola;3
-5;Ma cinquieme tâche;6
-6;La tache;5;102;100
->>>>>>> aec1276c88987f7fd03489f67b2ec6c27d17b741
+0;RTR;4;1;2
