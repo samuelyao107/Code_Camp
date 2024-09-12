@@ -133,36 +133,39 @@ def rm(filename, id):
 
 def show(filename):
     """
-    Modifie les tâches du fichier _filename_
+    Affiche les informations du fichier _filename_
 
     :param str filename: le nom du fichier a afficher
     """
+    
     lines = []
     lines_infos=[]
     with open(filename, 'r') as file:
         lines = file.readlines()
-    max_len_id = 0
-    max_len_des = 0
-    max_len_prio=0
+    max_len_infos = []
     for line in lines:
         infos = get_infos(line)
         lines_infos.append(infos)
-        max_len_id = max(max_len_id, len(infos[0]))
-        max_len_des = max(max_len_des, len(infos[1]))
-        max_len_prio=max(max_len_prio,len(infos[2]))
-    id_case_size = max_len_id + 2
-    des_case_size = max_len_des + 2
-    prio_case_size=max_len_prio+2
-    separator = "+" + "".join(['-' for i in range(id_case_size)]) + "+" + "".join(['-' for i in range(des_case_size)]) + "+"+"".join(['-' for i in range(prio_case_size) ])+"+"
+        if not(max_len_infos):
+            max_len_infos = [len(info) for info in infos]
+        else:
+            for i in range(len(infos)):
+                max_len_infos[i] = max(max_len_infos[i], len(infos[i]))
+    
+    infos_case_size = []
+    for _max in max_len_infos:
+        infos_case_size.append(_max+2)
+
+    separator = "+"
+    for size in infos_case_size:
+        separator += "".join(['-' for i in range(size)])+"+"
+
     print(separator)
 
-    for info in lines_infos:
-        print("|" , end="")
-        print(" " + info[0] + "".join([' ' for i in range(max_len_id - len(info[0]) + 1)]), end="")
-        print("|", end="")
-        print(" " + info[1] + "".join([' ' for i in range(max_len_des - len(info[1]) + 1)]), end="")
-        print("|",end="")
-        print( " " +info[2]+"".join([' ' for i in range(max_len_prio-len(info[2])+1)]),end="")
+    for infos in lines_infos:
+        for i in range(len(infos)):
+            print("|" , end="")
+            print(" " + infos[i] + "".join([' ' for i in range(max_len_infos[i] - len(infos[i]) + 1)]), end="")
         print("|")
         print(separator)
 
