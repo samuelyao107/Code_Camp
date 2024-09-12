@@ -45,7 +45,7 @@ def perform_action(args):
     Exécute l'action demandée par la ligne de commande, laquelle est stockée dans args
     """
     if args.type == "add":
-        add(args.filename, args.description, args.priority)
+        add(args.filename, args.description, args.priorite)
     if args.type == "modify":  
         modify(args.filename, int(args.id), args.description,args.priority)
     if args.type == "rm":  
@@ -165,16 +165,20 @@ def parse_performe():
     parser.add_argument("filename", default="", help="le nom du fichier sur laquelle l'action est réalisée")
     subparsers = parser.add_subparsers(dest="type", help="le type d'action a effectuer")
 
-    #subparser for the modify method
+    #subparser for the add method
     parser_add = subparsers.add_parser("add", help="Ajouter une tâche")
     parser_add.add_argument("description", help="La description de la nouvelle tâche")
     parser_add.add_argument("priority", help="La priorite de la nouvelle tâche")
+    parser_add.add_argument("est_dur", help="La durée estimée de la nouvelle tâche")
+    parser_add.add_argument("real_dur", help="La durée réalisée de la nouvelle tâche")
 
     #subparser for the modify method
     parser_modify = subparsers.add_parser("modify", help="Modifier une tâche")
     parser_modify.add_argument("id", help="L'id de la tâche a modifier")
     parser_modify.add_argument("--d", dest="description", help="La description de la tâche a modifier")
     parser_modify.add_argument("--p", dest="priority", help="La priorité de la tâche a modifier")
+    parser_modify.add_argument("--de", dest="est_dur", help="La durée estimée de la tâche a modifier")
+    parser_modify.add_argument("--dr", dest="real_dur", help="La durée réalisée de la tâche a modifier")
 
     #subparser for the rm method
     parser_rm = subparsers.add_parser("rm", help="Supprimer une tâche")
