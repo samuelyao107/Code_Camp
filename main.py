@@ -73,6 +73,19 @@ def add(filename, description, priorite, est_dur, real_dur):
         file.write(str(id_max+1) + ";" + description + ";" + str(priorite) +";"+ est_dur +";"+ real_dur +  "\n")
 
 def add_meta_tache(tache_file,meta_tache_file,id,description,priorite,est_dur,real_dur):
+    """
+    Rajoute une tache qui existe déjà dans le fichier meta_tache_file au fichier tache_fil
+
+    param str tache_file: le nom du fichier dans lequel on insère les taches
+    param str meta_tache_file : le nom du fichier contenant les meta taches
+    param int id : l'indice de la meta tache à insérer dans le fichier tache_file
+    param str description : la nouvelle description de la tache dans tache_file(optionnel)
+    param str description : la nouvelle description de la tache dans tache_file(optionnel)
+    param int priorite : la nouvelle priorité de la tache dans tache_file(optionnel)
+    param int est_dur : la nouvelle durée estimé de la tache dans tache_file(optionnel)
+    param int real_dur : la nouvelle durée réelle de la tache dans tache_file(optionnel)
+    
+    """
     meta_lines=[]
     with open(meta_tache_file,'r') as f :
         meta_lines=f.readlines()
