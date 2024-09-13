@@ -72,6 +72,31 @@ def add(filename, description, priorite, est_dur, real_dur):
     with open(filename, 'a') as file:
         file.write(str(id_max+1) + ";" + description + ";" + str(priorite) +";"+ est_dur +";"+ real_dur +  "\n")
 
+def add_meta_tache(tache_file,meta_tache_file,id,description,priorite,est_dur,real_dur):
+    meta_lines=[]
+    lines=[]
+    with open(meta_tache_file,'r') as f :
+        meta_lines=f.readlines()
+    not_found=True
+    for line in meta_lines:
+        info=get_infos(line)
+        if info[0]==id:
+            not_found=False
+            des=info[1]
+            prio=info[2]
+            dur_est=info[3]
+            dur_real=info[4]
+            if description!=None:
+                des=description
+            if priorite!=None:
+                prio=priorite
+            if est_dur!=None:
+                dur_est=est_dur
+            if real_dur!=None:
+                dur_real=real_dur
+            add(tache_file, des, prio, dur_est, dur_real)
+    if not_found:
+        print("Not found this task in Meta_Task file")
 
 def modify(filename, id, description, priority, est_dur, real_dur):
     """
