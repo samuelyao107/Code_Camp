@@ -1,5 +1,5 @@
 import argparse as ap
-
+import re
 
 def get_id(line):
     """
@@ -51,7 +51,7 @@ def perform_action(args):
     if args.type == "rm":  
         rm(args.filename, int(args.id))
     if args.type == "show":  
-        show(args.filename)
+        show(args.filename, args.f_description, args.f_motif, args.f_priorite)
     if args.type == "invoke_meta":
         add_meta_tache(args.filename, args.metataches_filename, args.id_meta, args.description,args.priority, args.est_dur, args.real_dur)
 
@@ -171,9 +171,24 @@ def rm(filename, id):
         print("ERROR : id not found")
 
 def filtrage(lines, f_description, f_motif, f_priorite):
-    pass
 
-def show(filename):
+    filter_lines = []
+
+    for line in lines:
+        infos = get_infos(line)
+        est_filtre = True
+        if (f_motif != None):
+            est_filtre =  est_filtre and (re.search(f_motif, infos[1]))
+        if (f_description != None):
+            est_filtre = est_filtre and (infos[1] == f_description)
+        if (f_priorite != None):
+            est_filtre = est_filtre and (infos[2] == f_priorite)
+        if est_filtre:
+            filter_lines.append(line)
+
+    return filter_lines
+
+def show(filename, f_description, f_motif, f_priorite):
     """
     Affiche les informations du fichier _filename_
 
@@ -184,6 +199,9 @@ def show(filename):
     lines_infos=[]
     with open(filename, 'r') as file:
         lines = file.readlines()
+
+    lines = filtrage(lines, f_description, f_motif, f_priorite)
+
     max_len_infos = []
     for line in lines:
         infos = get_infos(line)
@@ -249,7 +267,9 @@ def parse_performe():
 
     #subparser for the show method
     parser_show = subparsers.add_parser("show", help="Afficher les tâches")
-    parser_show.add_argument("-fm", dest="filtrage_motif",help="Filtre les tâches contenant le motif dans leur description")
+    parser_show.add_argument("-fm", dest="f_motif",help="Filtre les tâches contenant le motif dans leur description")
+    parser_show.add_argument("-fd", dest="f_description",help="Filtre les tâches contenant le motif dans leur description")
+    parser_show.add_argument("-fp", dest="f_priorite",help="Filtre les tâches contenant le motif dans leur description")
 
     args = parser.parse_args()
 
