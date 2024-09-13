@@ -157,6 +157,9 @@ def rm(filename, id):
     if notfound:
         print("ERROR : id not found")
 
+def filtrage(lines, f_description, f_motif, f_priorite):
+    pass
+
 def show(filename):
     """
     Affiche les informations du fichier _filename_
@@ -233,6 +236,7 @@ def parse_performe():
 
     #subparser for the show method
     parser_show = subparsers.add_parser("show", help="Afficher les tâches")
+    parser_show.add_argument("-fm", dest="filtrage_motif",help="Filtre les tâches contenant le motif dans leur description")
 
     args = parser.parse_args()
 

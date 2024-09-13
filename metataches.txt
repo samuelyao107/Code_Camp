@@ -1,2 +1,0 @@
-0;Bonjour;1;1;2
-1;Bonsoir;2;2;3
